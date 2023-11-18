@@ -1,0 +1,30 @@
+django setup:
+
+pip install virtualenv
+
+python -m venv djangovenv
+
+djangovenv/Scripts/activate
+
+pip install django
+
+django-admin startproject project1
+
+cd project1
+
+python manage.py runserver 
+
+
+python manage.py migrate
+
+python manage.py startapp myapp
+
+
+djangovenv) PS C:\Users\Attar Computer\Desktop\AIDS\django\project1\project1> cd ..
+(djangovenv) PS C:\Users\Attar Computer\Desktop\AIDS\django\project1> python manage.py runserver
+
+
+
+for applying the changes heppened in DB:
+python manage.py makemigrations
+python manage.py migrate
