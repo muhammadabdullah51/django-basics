@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from openai import OpenAI
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="YOUR_API_KEY")
 
 
 def gpt_turbo(strval):
