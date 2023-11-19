@@ -6,7 +6,7 @@ from .models import Person
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 
 
@@ -65,7 +65,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('welcome') # Change 'home' to the name of your home page URL
+            return redirect('welcome') # Change 'welcome' to the name of your home page URL
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
@@ -75,7 +75,13 @@ def login_view(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect('welcome') # Change 'home' to the name of your home page URL
+            return redirect('welcome') # Change 'welcome' to the name of your home page URL
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+@login_required
+def logout_fun(request):
+    logout(request)
+    return redirect('login')
+
