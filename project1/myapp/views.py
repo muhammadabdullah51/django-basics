@@ -1,6 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Person
 # Create your views here.
+
+
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+
+
 
 from openai import OpenAI
 client = OpenAI(api_key="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")
@@ -17,12 +26,15 @@ def gpt_turbo(strval):
 
     return str(completion.choices[0].message.content)
 
+@login_required
 def welcome(request):
     return render(request, 'index.html')
 
+@login_required
 def aboutus(request):
     return render(request, 'about.html')
 
+@login_required
 def contactus(request):
     result = None
     print('hi')
@@ -34,6 +46,7 @@ def contactus(request):
         myinstaance.save()
     return render(request, 'contact.html', {'result' : result})
 
+@login_required
 def generate(request):
     results = None
     print("hi")
@@ -44,3 +57,25 @@ def generate(request):
         myinstaance = Person(userinputvalue = user_input_text, mycalvalue = results)
         myinstaance.save()
     return render(request, 'generate.html', {'result' : results})  
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('welcome') # Change 'home' to the name of your home page URL
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('welcome') # Change 'home' to the name of your home page URL
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})

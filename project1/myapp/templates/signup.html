@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to signup</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+            color: white ;
+            font-weight: 900;
+        }
+       
+        #section{
+            display: flex;
+            justify-content: start;
+            padding: 40px;
+        }
+        
+        .sidebar{
+            display: flex;
+            flex-direction: column;
+            height: 60vh;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .content{
+            padding: 30px;
+            color: white;
+        }
+        .div{
+            height: 1000px;
+            width: 2px;
+            background-color: white;
+        }
+
+        input#id_username,input#id_password1,input#id_password2 {
+            width: 100%;
+        }
+        button {
+            width: 30%;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="section">
+        
+        <div class="sidebar">
+            <a href="{% url 'welcome' %}">HOME</a>
+            <a href="{% url 'aboutus' %}">ABOUT US</a>
+            <a href="{% url 'contactus' %}">CONTACT US</a>
+            <a href="{% url 'generate' %}">GENERATE</a>
+        </div>
+        <div class="div"></div>
+        <div class="content">
+            <h1>Signup Page</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+
+        
+        
+    </div>
+</body>
+</html>
